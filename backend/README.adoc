@@ -7,3 +7,10 @@ The following steps are performed:
 - run against a blacklist and delete all found words (YOLO, FOMO, DD, etc.)
 - delete single letters
 - remove duplicate words
+
+## TODO:
+- [x] logic which filters the most mentioned stock symbols from a text
+- [x] scan reddit posts of the last day (headlines)
+- [ ] scan comments of the reddit posts
+- [ ] exclude users with karma below 50 to exclude bots
+- [ ] provide private API access
