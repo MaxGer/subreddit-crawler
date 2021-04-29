@@ -1,1 +1,9 @@
 # Backend
+
+The algorithm tries to filter the trends of r/wallstreetbets.  
+The following steps are performed:  
+- read 100 hot headlines & texts
+- remove words that appear in a standard word list
+- run against a blacklist and delete all found words (YOLO, FOMO, DD, etc.)
+- delete single letters
+- remove duplicate words
