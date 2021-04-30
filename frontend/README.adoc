@@ -1,1 +1,6 @@
 # Frontend
+
+Web app to receive a convinient visualization of the analysed backend data.
+
+## TODO:
+- [ ] Decide which technology to use

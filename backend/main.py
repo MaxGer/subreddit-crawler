@@ -7,19 +7,7 @@ from operator import itemgetter
 from collections import Counter
 from Data.big_mock_data import big_mock_posts
 
-#############
-#
-# Algorithm tries to filter the trends of r/wallstreetbets
-# The following steps are performed:
-# - read 100 hot headlines & texts
-# - remove words that appear in a standard word list
-# - run against a blacklist and delete all found words (YOLO, FOMO, DD, etc.)
-# - delete single letters
-# - remove duplicate words
-#
-#############
-
-#
+# Retrieves the reddit posts of the last day for the given sort. Default is `new`.
 def get_reddit_posts(sort = 'new'):
     allposts = []
     after = ''
@@ -70,6 +58,7 @@ def merge_posts(posts):
 
     return full_text
 
+## Removes duplicates from given string
 def uniquify(string):
     output = []
     seen = set()
@@ -79,7 +68,7 @@ def uniquify(string):
             seen.add(word)
     return ' '.join(output)
 
-# filter the given text
+# Filter the given text. Remove words from the wordlists and calls `clean_test`.
 def filter_text(full_text):
     with open('./Data/english_words.txt') as f:
         common_words = f.readlines()
@@ -97,30 +86,14 @@ def filter_text(full_text):
     filtered_text = clean_text(filtered_text)
     return filtered_text
 
-# removes single char strings form string
+## Removes single char strings form the given string
 def clean_text(text):
     cleaned_text = text
     cleaned_text = ' '.join( [w for w in cleaned_text.split() if len(w)>1] )
     cleaned_text = ' '.join(cleaned_text.split())
     return cleaned_text
 
-# count words
-def count_words(text):
-    words = {}
-    words_gen = (word.strip(punctuation).lower() for line in text for word in line.split())
-
-    for word in words_gen:
-        words[word] = words.get(word, 0) + 1
-
-    top_words = Counter(words_gen).most_common(N)
-
-    mentions = []
-    for word, frequency in top_words:
-        mentions.append(StockMention(word, frequency))
-    
-    return mentions
-
-## removes mentions with a frequency below 5 and removes strings with numbers
+# Removes mentions with a frequency below 5 and removes strings with numbers
 def filter_irrelevat_mentions(mentions):
     relevant_mentions = []
     for mention in mentions:
