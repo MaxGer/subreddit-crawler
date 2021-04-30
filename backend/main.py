@@ -7,7 +7,6 @@ from operator import itemgetter
 from collections import Counter
 from Data.big_mock_data import big_mock_posts
 
-# Retrieves the reddit posts of the last day for the given sort. Default is `new`.
 def get_reddit_posts(sort = 'new'):
     allposts = []
     after = ''
@@ -39,26 +38,20 @@ def get_reddit_posts(sort = 'new'):
     
     return allposts
 
-## cheks if the given post is older than 1 day
 def post_is_stale(post):
     createdAt = datetime.utcfromtimestamp(post['data']['created'])
     time_between = datetime.now() - createdAt
     return time_between.days > 1
 
-# Merge the posts to one array
 def merge_posts(posts):
     full_text = ''
     for post in posts:
         if ('title' in post['data'] and post['data']['title'] is not None):
             title_without_duplicates = uniquify(post['data']['title'])
             full_text += title_without_duplicates
-        # if ('selftext' in post['data'] post['data']['selftext'] is not None):
-        #     text_without_duplicates = uniquify(post['data']['selftext'])
-        #     full_text += text_without_duplicates
 
     return full_text
 
-## Removes duplicates from given string
 def uniquify(string):
     output = []
     seen = set()
@@ -68,8 +61,8 @@ def uniquify(string):
             seen.add(word)
     return ' '.join(output)
 
-# Filter the given text. Remove words from the wordlists and calls `clean_test`.
 def filter_text(full_text):
+    """Removes words from the wordlists and calls `clean_text`"""
     with open('./Data/english_words.txt') as f:
         common_words = f.readlines()
     common_words = [x.strip() for x in common_words]
@@ -86,24 +79,23 @@ def filter_text(full_text):
     filtered_text = clean_text(filtered_text)
     return filtered_text
 
-## Removes single char strings form the given string
 def clean_text(text):
+    """Removes single char strings form the given string and rm spaces."""
     cleaned_text = text
     cleaned_text = ' '.join( [w for w in cleaned_text.split() if len(w)>1] )
     cleaned_text = ' '.join(cleaned_text.split())
     return cleaned_text
 
-# Removes mentions with a frequency below 5 and removes strings with numbers
 def filter_irrelevat_mentions(mentions):
+    """Removes mentions with a frequency below 5 and removes strings with numbers"""
     relevant_mentions = []
     for mention in mentions:
-        if (mention[1] > 4 and not hasNumbers(mention[0])):
+        if (mention[1] > 4 and not has_numbers(mention[0])):
             relevant_mentions.append(mention)
 
     return relevant_mentions
 
-### checks if the given string contains numbers
-def hasNumbers(inputString):
+def has_numbers(inputString):
     return bool(re.search(r'\d', inputString))
 
 if __name__ == '__main__':
