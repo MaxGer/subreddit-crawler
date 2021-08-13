@@ -1,4 +1,4 @@
-# Backend
+= Backend
 
 The algorithm tries to filter the trends of r/wallstreetbets.  
 The following steps are performed:  
@@ -8,15 +8,15 @@ The following steps are performed:
 - delete single letters
 - remove duplicate words
 
-## TODO
+== TODO
 - [x] logic which filters the most mentioned stock symbols from a text
 - [x] scan reddit posts of the last day (headlines)
-- [ ] clean current code and extract code to new files
+- [x] clean current code and extract code to new files
 - [ ] scan comments of the reddit posts
 - [ ] exclude users with karma below 50 to exclude bots
 - [ ] provide private API access
 
-## Dev Setup
+== Dev Setup
 - Install `python3`
 - Install `pip3`
 - Run `pip3 install -r requirements.txt` inside of the `/backend` directory
